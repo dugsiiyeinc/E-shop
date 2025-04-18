@@ -1,12 +1,20 @@
-# React + Vite
+# 🛒 E-shope
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**E-shope** is a modern e-commerce web application built with **React** and **Supabase**. It allows users to browse and purchase electronics with features like cart management, user authentication, and admin control.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🛍️ Browse products by category and filter
+- 🛒 Add to cart and manage checkout
+- 🔐 User authentication with Supabase Auth
+- 📊 Admin dashboard with product, order, and user management
+- ⭐ Product rating system
+- 📦 Real-time order tracking with status updates
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Frontend: **React**, **Tailwind CSS**, **React Router**
+- Backend: **Supabase** (PostgreSQL, Auth, Storage, and Realtime)
+
+## 📁 Folder Structure
+
