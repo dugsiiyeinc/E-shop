@@ -20,7 +20,7 @@ export const SearchComponent = () => {
       {/* Trigger Button */}
       <div
         onClick={() => setIsSearchOpen(true)}
-        className="flex justify-between items-center space-x-4 px-4 py-2 bg-gray-100 rounded-md cursor-pointer"
+        className="flex justify-between items-center space-x-0 sm:space-x-4 px-4 py-2 bg-gray-100 rounded-md cursor-pointer"
       >
         <p className="text-sm text-gray-400">What are you looking for?</p>
         <Search className="w-5 h-5 text-gray-500" />

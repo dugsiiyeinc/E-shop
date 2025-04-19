@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/accordion";
 
 export const Header = () => {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   const IsAdmin = true;
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
