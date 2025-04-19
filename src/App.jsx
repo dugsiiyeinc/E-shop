@@ -1,12 +1,22 @@
-import { Button } from "@/components/ui/button"
+import { Outlet } from "react-router";
+import { Footer } from "./components/Footer";
+import { Header } from "./components/Header";
 
 function App() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-svh">
-      <Button className='bg-amber-600 cursor-pointer'>Click me</Button>
-      
+    <div className="bg-gray-50">
+      {/* Header */}
+      <Header />
+
+      {/* pages */}
+      <main>
+        <Outlet />
+      </main>
+
+      {/* Footer */}
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
