@@ -20,11 +20,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useAuth } from "../Context/AuthContext";
 
 export const Header = () => {
-  const isLoggedIn = true;
-  const IsAdmin = true;
 
+  const {user, isLogged, profile, logOutFun}=useAuth()
+  // console.log(user)
+  // console.log(profile)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -105,7 +107,7 @@ export const Header = () => {
           <div className="flex justify-between sm:justify-center items-center space-x-4 sm:space-x-6">
             <SearchComponent />
             <div className="flex items-center text-sm">
-              {isLoggedIn ? (
+              {isLogged ? (
                 <div className="flex items-center space-x-3">
                   <Link to={"/cart"} className="relative">
                     <IoCartOutline className="text-xl text-gray-500" />
@@ -118,36 +120,42 @@ export const Header = () => {
                 <DropdownMenu >
                     <DropdownMenuTrigger className="cursor-pointer">
                       <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" />
+                        <AvatarImage src={profile?.Avatar_url||"https://github.com/shadcn.png" }/>
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="min-w-[200px]">
                       <DropdownMenuLabel className="cursor-pointer">
-                        My Account
+                        {profile?.name}
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator className="cursor-pointer hover:bg-gray-200" />
-                      {IsAdmin ? (
+                      {profile?.role ==='admin' ? (
                         <DropdownMenuItem className="cursor-pointer hover:bg-gray-200 ">
-                          <LayoutDashboard /> Admin
+                          <Link className="/admin">
+                          <LayoutDashboard className="mr-2"  /> Admin
+                          </Link>
                         </DropdownMenuItem>
                       ) : (
                         <DropdownMenuItem className="cursor-pointer hover:bg-gray-200">
-                          <User /> Profile
+                         <Link className="flex" to={'/userProfile'}>
+                         <User className="mr-2" /> Profile
+                         </Link>
                         </DropdownMenuItem>
                       )}
                       <DropdownMenuItem className="cursor-pointer hover:bg-gray-200">
                         <Truck /> My Orders
                       </DropdownMenuItem>
-                      <DropdownMenuItem className="cursor-pointer bg-red-50 hover:bg-red-100 text-red-500">
+                     <Link to={'/auth'}>
+                     <DropdownMenuItem onClick={()=> {logOutFun()}} className="cursor-pointer bg-red-50 hover:bg-red-100 text-red-500">
                         <LogOut className="text-red-500" /> Logout
                       </DropdownMenuItem>
+                     </Link>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
                 </div>
               ) : (
-                <Link to={"/signin"}>
+                <Link to={"/auth"}>
                   <Button
                     className={
                       "hidden md:flex bg-amber-500 text-white cursor-pointer hover:bg-amber-600"
@@ -176,28 +184,30 @@ export const Header = () => {
           isMobileMenuOpen ? "h-[400px]" : "h-0"
         } bg-gray-50 shadow-lg z-50`}
       >
+
+        {/* user Profile */}
        {
-        isLoggedIn && (
+        isLogged && (
           <div className="py-3 px-6 flex flex-col gap-3">
           <Accordion type="single" collapsible>
             <AccordionItem value="item-4" className={'border-b-3 border-gray-400'}>
               <AccordionTrigger >
                 <div className="flex items-center space-x-4 ">
                   
-                  <img src='https://github.com/shadcn.png' alt="profile img" className="w-9 h-9 rounded-full object-cover"/>
-                  <span className="text-sm text-gray-700">Your Account  !</span>
+                  <img src={profile?.Avatar_url ||'https://github.com/shadcn.png'} alt="profile img" className="w-9 h-9 rounded-full object-cover"/>
+                  <span className="text-sm text-gray-700">{profile?.name}</span>
                 </div>
               </AccordionTrigger>
               <AccordionContent>
                {
-                IsAdmin?(
+                profile?.role ==='admin'?(
                   <Link to={'/admin'} className="flex items-center px-6 text-gray-700">
-                  <LayoutDashboard className="mr-2"/>
+                  <LayoutDashboard className="mr-2 w-5"/>
                    <span className="font-medium">Admin</span>
                 </Link>
                 ):(
-                  <Link to={'/profile'} className="flex items-center px-6 text-gray-700">
-                  <User className="mr-2"/>
+                  <Link to={'/userProfile'} className="flex items-center px-6 text-gray-700">
+                  <User className="mr-2 w-5"/>
                    <span className="font-medium">Profile</span>
                 </Link>
                 )
@@ -205,13 +215,13 @@ export const Header = () => {
               </AccordionContent>
               <AccordionContent>
               <Link className="flex items-center px-6 text-gray-700">
-              <Truck className="mr-2"/>
+              <Truck className="mr-2 w-5"/>
               <span className="font-medium">My Orders</span>
               </Link>
               </AccordionContent>
               <AccordionContent>
-              <Link to={"/signin"} className="cursor-pointer bg-red-50 hover:bg-red-100 text-red-500 flex items-center px-6 py-1 rounded-md">
-              <LogOut className="text-red-500 mr-2" /> <span>Logout</span>
+              <Link to={"/auth"} className="cursor-pointer bg-red-50 hover:bg-red-100 text-red-500 flex items-center px-6 py-1 rounded-md">
+              <LogOut className="text-red-500 mr-2 w-5" /> <span>Logout</span>
                 </Link>
               </AccordionContent>
             </AccordionItem>
@@ -219,6 +229,8 @@ export const Header = () => {
         </div>
         )
        }
+
+       {/* links */}
         <div className="py-4 px-8 flex flex-col gap-3 border-t">
         <NavLink
               to={"/"}
@@ -275,24 +287,15 @@ export const Header = () => {
               About
             </NavLink>
             {
-              !isLoggedIn && (
+              !isLogged && (
                <>
-                 <Link to={"/signin"}>
+                 <Link to={"/auth"}>
                   <Button
                     className={
                       "inline-flex w-full bg-amber-500 text-white cursor-pointer hover:bg-amber-600"
                     }
                   >
                     Sign in
-                  </Button>
-                </Link>
-                <Link to={"/signup"}>
-                  <Button
-                    className={
-                      "inline-flex w-full bg-white text-gray-800 cursor-pointer border border-amber-600 py-3 hover:bg-white"
-                    }
-                  >
-                    Sign Up
                   </Button>
                 </Link>
                </>

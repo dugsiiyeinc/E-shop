@@ -2,8 +2,6 @@ import { createBrowserRouter } from "react-router";
 import App from "./App";
 import { Home } from "./page/Home";
 import { AboutPage } from "./page/AboutPage";
-import SigingPage from "./page/SigingPage";
-import SignUpPage from "./page/SignUpPage";
 import ContectPage from "./page/ContectPage";
 import CartsPage from "./page/CartsPage";
 import CheckOutPage from "./page/CheckOutPage";
@@ -13,6 +11,11 @@ import AdminDashbord from "./page/AdminDashbord";
 import { BlogsPage } from "./page/BlogsPage";
 import { BlogDetails } from "./page/BlogDetails";
 import { EditorBlog } from "./page/EditorBlog";
+import { AuthPage } from "./page/AuthPage";
+import { UnAuthtenticatedRout } from "./components/UnAuthtenticatedRout";
+import { AuthenticatedRoutes } from "./components/AuthenticatedRoutes";
+import { AuthenticatedAminRoutes } from "./components/AuthenticatedAdminRoute";
+import { UserProfile } from "./page/UserProfile";
 
 
 const Router=createBrowserRouter([
@@ -51,32 +54,65 @@ const Router=createBrowserRouter([
 
             // un authenticated
             {
-                path:'/signin',
-                element:<SigingPage/>
-            },
+                path: '/auth',
+                element: (
+                  <UnAuthtenticatedRout>
+                    <AuthPage/>
+                  </UnAuthtenticatedRout>
+                ),
+              },
+              
             {
-                path:'/signup',
-                element:<SignUpPage/>
+                path:'/singin',
+                element:<AuthPage/>
             },
+           
            
             // Authenticated
             {
+                path:"/userProfile",
+                element: (
+                    <AuthenticatedRoutes>
+                        <UserProfile/>
+                    </AuthenticatedRoutes>
+                ),
+            }, 
+            {
                 path:"/cart",
-                element:<CartsPage/>
+                element: (
+                    <AuthenticatedRoutes>
+                        <CartsPage/>
+                    </AuthenticatedRoutes>
+                ),
             }, 
             {
                 path:'/checkOut',
-                element:<CheckOutPage/>
+                element: (
+                    <AuthenticatedRoutes>
+                       <CheckOutPage/>
+                    </AuthenticatedRoutes>
+                ),
+                
             },
            
            
             {
                 path:"/admin",
-                element:<AdminDashbord/>
+                element:(
+                    <AuthenticatedAminRoutes>
+                        <AdminDashbord/>
+                    </AuthenticatedAminRoutes>
+                )
+                
             }, 
             {
                 path:"/blogEditor",
-                element:<EditorBlog/>
+                element:(
+                    <AuthenticatedAminRoutes>
+                        <EditorBlog/>
+                    </AuthenticatedAminRoutes>
+                )
+                
             }
         ]
     }

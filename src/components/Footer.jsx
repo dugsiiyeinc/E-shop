@@ -38,9 +38,9 @@ export const Footer = () => {
             </h1>
             <Link to={'/profile'} className=' font-light mb-2 hover:underline'>My Account</Link>
             <div className="flex items-center">
-            <Link to={'/signin'} className=' font-light mb-2 hover:underline mr-2'>SignIn</Link>
+            <Link to={'/auth'} className=' font-light mb-2 hover:underline mr-2'>SignIn</Link>
              / 
-            <Link to={'/signup'} className=' font-light mb-2 hover:underline ml-2'>SignUp</Link>
+            <Link to={'/auth'} className=' font-light mb-2 hover:underline ml-2'>SignUp</Link>
 
             </div>
             <Link to={'/cart'} className=' font-light mb-2 hover:underline'>Cart</Link>
