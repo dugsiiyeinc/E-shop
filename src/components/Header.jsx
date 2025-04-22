@@ -120,7 +120,7 @@ export const Header = () => {
                 <DropdownMenu >
                     <DropdownMenuTrigger className="cursor-pointer">
                       <Avatar>
-                        <AvatarImage src={profile?.Avatar_url||"https://github.com/shadcn.png" }/>
+                        <AvatarImage src={profile?.avatar_url||"https://github.com/shadcn.png" }/>
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
                     </DropdownMenuTrigger>
@@ -194,7 +194,7 @@ export const Header = () => {
               <AccordionTrigger >
                 <div className="flex items-center space-x-4 ">
                   
-                  <img src={profile?.Avatar_url ||'https://github.com/shadcn.png'} alt="profile img" className="w-9 h-9 rounded-full object-cover"/>
+                  <img src={profile?.avatar_url ||'https://github.com/shadcn.png'} alt="profile img" className="w-9 h-9 rounded-full object-cover"/>
                   <span className="text-sm text-gray-700">{profile?.name}</span>
                 </div>
               </AccordionTrigger>

@@ -18,7 +18,8 @@ export const AuthPage = () => {
           <TabsContent value="account" className='w-full'>
              <SigingPage />
           </TabsContent>
-          <TabsContent value="password"><SignUpPage /></TabsContent>
+          <TabsContent value="password"><SignUpPage 
+          /></TabsContent>
           </div>
         </Tabs>
       </div>

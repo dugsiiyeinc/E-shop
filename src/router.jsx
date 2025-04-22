@@ -16,6 +16,9 @@ import { UnAuthtenticatedRout } from "./components/UnAuthtenticatedRout";
 import { AuthenticatedRoutes } from "./components/AuthenticatedRoutes";
 import { AuthenticatedAminRoutes } from "./components/AuthenticatedAdminRoute";
 import { UserProfile } from "./page/UserProfile";
+import { UserOrdes } from "./page/UserOrdes";
+import { UserprofileInfo } from "./components/UserprofileInfo";
+
 
 
 const Router=createBrowserRouter([
@@ -86,14 +89,24 @@ const Router=createBrowserRouter([
                 ),
             }, 
             {
-                path:'/checkOut',
+                path: "/userProfile",
                 element: (
-                    <AuthenticatedRoutes>
-                       <CheckOutPage/>
-                    </AuthenticatedRoutes>
+                  <AuthenticatedRoutes>
+                    <UserProfile />
+                  </AuthenticatedRoutes>
                 ),
-                
-            },
+                children: [
+                  {
+                    index: true,
+                    element: <UserprofileInfo />, 
+                  },
+                  {
+                    path: "orders",
+                    element: <UserOrdes />, 
+                  },
+                ],
+              },
+              
            
            
             {

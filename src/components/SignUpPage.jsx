@@ -4,14 +4,13 @@ import { Button } from "./ui/button";
 import { BeatLoader } from "react-spinners";
 import { useForm } from "react-hook-form";
 import { signUp } from "../lib/Auth";
-import { Navigate } from "react-router";
 import { CheckCircle } from 'lucide-react';
 import toast from "react-hot-toast";
 
 
 export default function SignUpPage() {
   const [loading, setIsLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [successs, setSuccesss] = useState(false);
 
   const {
     register,
@@ -26,8 +25,7 @@ export default function SignUpPage() {
      try {
        await signUp(email, password, username)
        toast.success('Account created!')
-       setSuccess(true)
-      //  window.location.reload();
+       setSuccesss(true)
      } catch (error) {
       console.error('signup error:', error)
      }finally{
@@ -35,7 +33,7 @@ export default function SignUpPage() {
      }
   };
  
-  if(success){
+  if(successs){
     return (
       <div className="flex items-center justify-center min-h-[300px]">
       <div className="bg-white p-6 rounded-lg  text-center animate-fade-in">
@@ -43,7 +41,6 @@ export default function SignUpPage() {
         <h2 className="text-2xl font-bold text-gray-700 mb-2">Account Created!</h2>
         <p className="text-gray-500 mb-4">Your account has been successfully created.</p>
         <span
-          to="/signin"
           className="inline-block px-4 py-2 text-green-600  rounded transition duration-300"
         >
           Go to Sign In
@@ -169,7 +166,7 @@ export default function SignUpPage() {
             {loading ? (
               <BeatLoader color="#bbb" loading={true} size={10} />
             ) : (
-              "Sign In"
+              "Sign Up"
             )}
           </Button>
         </div>

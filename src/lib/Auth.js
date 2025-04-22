@@ -8,44 +8,14 @@ export async function signUp(email, password, username='') {
         password:password
       })
 
-      // console.log(data)
 
-      if(data?.user){
-        const {data:sessionData}=await supabase.auth.getSession()
-
-        if(!sessionData?.session){
-          return data
-        }
-      
-
-      const displayName=username || email.split('@')[0]
-
-      // create  profile
-      const {data:profileData, error:profileError} = await supabase
-        .from('users')
-        .insert({
-          id: data.user.id,
-          name: displayName,
-          avatar_url: null
-        })
-        .select()
-        .single()
-
-
-      if(profileError){
-        console.error(error)
-        return
-      }else{
-        console.log('profile created', profileData)
-      }
-    } 
 
       return data
 }
 
 
 // signin
-export const  signIn= async(email, password)=>{
+export async function  signIn(email, password){
   let {data,error}=await supabase.auth.signInWithPassword({
     email:email,
     password:password
