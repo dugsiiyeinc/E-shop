@@ -7,7 +7,21 @@ import { BeatLoader } from "react-spinners";
 import { v4 as uuidv4 } from 'uuid';
 import supabase from '../lib/supabase'
 
-export const UserprofileInfo = () => {
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarTrigger,
+}from "@/components/ui/sidebar"
+
+export const AdminProfile = () => {
  const  [userName, setUserName]=useState('')
  const  [email, setemail]=useState('')
  const  [avatar_url, setAvatar_url]=useState('')
@@ -96,7 +110,29 @@ const handleAvatarChange=(e)=>{
 
 
   return (
-    <div className='w-full shadow-sm sm:px-4 py-2 rounded-md'>
+     <SidebarInset className=''>
+                    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+                      <div className="flex items-center gap-2 px-4">
+                        <SidebarTrigger className="-ml-1" />
+                        <Separator orientation="vertical" className="mr-2 h-4" />
+                        <Breadcrumb>
+                          <BreadcrumbList>
+                            <BreadcrumbItem className="hidden md:block">
+                              <BreadcrumbLink href="#">
+                                Building Your Application
+                              </BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator className="hidden md:block" />
+                            <BreadcrumbItem>
+                              <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                            </BreadcrumbItem>
+                          </BreadcrumbList>
+                        </Breadcrumb>
+                      </div>
+                    </header>
+                    
+
+                    <div className='w-full sm:max-w-5xl mx-5 sm:mx-auto my-10 shadow-sm sm:px-4 py-2 rounded-md'>
       {/* header section */}
       <div className="w-full min-h-[150px] sm:min-h-[200px] rounded-md bg-gradient-to-r from-rose-700 to-rose-400 p-2 flex flex-col items-center justify-center">
         
@@ -131,5 +167,6 @@ const handleAvatarChange=(e)=>{
       <Button className={'mt-8 py-5 cursor-pointer '}>{!loading?'Save changes':  <BeatLoader color="#bbb" loading={true} size={10} />}</Button>
       </div>
     </div>
+     </SidebarInset>
   )
 }

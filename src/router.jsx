@@ -4,7 +4,6 @@ import { Home } from "./page/Home";
 import { AboutPage } from "./page/AboutPage";
 import ContectPage from "./page/ContectPage";
 import CartsPage from "./page/CartsPage";
-import CheckOutPage from "./page/CheckOutPage";
 import { ProductsPage } from "./page/ProductsPage";
 import { ProductDetailPage } from "./page/ProductDetailPage";
 import AdminDashbord from "./page/AdminDashbord";
@@ -18,6 +17,14 @@ import { AuthenticatedAminRoutes } from "./components/AuthenticatedAdminRoute";
 import { UserProfile } from "./page/UserProfile";
 import { UserOrdes } from "./page/UserOrdes";
 import { UserprofileInfo } from "./components/UserprofileInfo";
+import { Right } from "@/components/Right";
+import { ProductspageAdmin } from "./components/ProductspageAdmin";
+import { OrdersPageAdmin } from "./components/OrdersPageAdmin";
+import { Users } from "./components/Users";
+import { AdminProfile } from "./components/AdminProfile";
+import { AdminBlogPage } from "./components/AdminBlogPage";
+import { AddNewProduct } from "./components/AddNewProduct";
+
 
 
 
@@ -114,19 +121,46 @@ const Router=createBrowserRouter([
                 element:(
                     <AuthenticatedAminRoutes>
                         <AdminDashbord/>
+                        
                     </AuthenticatedAminRoutes>
-                )
+                ), 
+                children:[
+                    {
+                        index:true,
+                        element:<Right/>
+                    },
+                    {
+                        path:'products',
+                        element:<ProductspageAdmin/>
+                    },
+                    {
+                        path:'orders',
+                        element:<OrdersPageAdmin/>
+                    },
+                    {
+                        path:"users",
+                        element:<Users/>
+                    },
+                    {
+                        path:'blogs',
+                        element:<AdminBlogPage/>
+                    },
+                    {
+                        path:'editor-blog',
+                        element:<EditorBlog/>
+                    },
+                    {
+                        path:'profile',
+                        element:<AdminProfile/>
+                    },
+                    {
+                        path:"addProduct",
+                        element:<AddNewProduct/>
+                    }
+                ]
                 
             }, 
-            {
-                path:"/blogEditor",
-                element:(
-                    <AuthenticatedAminRoutes>
-                        <EditorBlog/>
-                    </AuthenticatedAminRoutes>
-                )
-                
-            }
+            
         ]
     }
 ])

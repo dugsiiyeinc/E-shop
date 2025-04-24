@@ -130,8 +130,8 @@ export const Header = () => {
                       </DropdownMenuLabel>
                       <DropdownMenuSeparator className="cursor-pointer hover:bg-gray-200" />
                       {profile?.role ==='admin' ? (
-                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-200 ">
-                          <Link className="/admin">
+                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-200  ">
+                          <Link className="flex items-center" to={'/admin'}>
                           <LayoutDashboard className="mr-2"  /> Admin
                           </Link>
                         </DropdownMenuItem>
