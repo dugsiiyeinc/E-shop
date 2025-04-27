@@ -51,6 +51,7 @@ export const ProductspageAdmin = () => {
             <Button className={'px-9 cursor-pointer flex items-center'}><SquarePlus className=''/> Add New Product</Button>
           </NavLink>
         </div>
+        <div className="flex flex-col gap-12"></div>
       </div>
     </SidebarInset>
   );

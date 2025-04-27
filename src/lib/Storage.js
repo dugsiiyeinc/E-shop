@@ -2,8 +2,8 @@ import {v4 as uuidv4} from 'uuid'
 import supabase from './supabase'
 
 
-// upload product Thumbnail img
-export const uploadThumnail=async(file, userId, bucket='thumbnail-image')=>{
+// upload product Thumbnail and imgs
+export const uploadThumnail=async(file, userId,  bucket='thumbnail-image')=>{
 
 
     try {
@@ -38,10 +38,10 @@ export const uploadThumnail=async(file, userId, bucket='thumbnail-image')=>{
 
 
 // delete thumbnail
-export const deleteImage = async (filePath) => {
+export const deleteImage = async (filePath, bucket) => {
   const { data, error } = await supabase
     .storage
-    .from('thumbnail-image')
+    .from(bucket)
     .remove([filePath]);
 
   if (error) {

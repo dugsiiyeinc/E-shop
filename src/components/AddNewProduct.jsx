@@ -18,8 +18,11 @@ import { categories } from "../categories";
 import toast from "react-hot-toast";
 import { deleteImage, uploadThumnail } from "../lib/Storage";
 import { useAuth } from "../Context/AuthContext";
+import { createProduct } from "../lib/Products";
 
 export const AddNewProduct = () => {
+const isEditMode=false
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -28,13 +31,16 @@ export const AddNewProduct = () => {
   const [selectedthumbnail, setSelectedthumbnail] = useState(null);
   const [uplaodThumnail, setUplaodThumnail] = useState(false);
   const [images, setImages] = useState([]);
+  const [selectedImage, setSelectedImage]=useState(null)
+  const [uploadingSelectedImage, setUploadingSelectedImage]=useState(false)
   const [isCategoryOpen, setIscategoryOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [publishloading, setPublishLoading] = useState(false);
+  const [errors,setErrors]=useState(null)
 
 
   const {user}=useAuth()
-
+  let bucket=''
   // console.log(categories);
   // console.log(selectedCategory);
 
@@ -45,6 +51,60 @@ export const AddNewProduct = () => {
         : [...prev, category]
     );
   };
+
+
+    // handle related iamage
+    const handleUplaodImage=(e)=>{
+      const file=e.target.files[0]
+      // console.log(file)
+      if(file){
+        if(!file.type.startsWith('image/')){
+          toast.error('Please select an image file')
+          e.target.value='';
+          setSelectedImage(null)
+          return
+        }
+        setSelectedImage(file)
+  
+      }
+    }
+
+    const handleUplaodImageSupabase=async()=>{
+      if(images.length >=3){
+        toast.error("You can only upload up to 3 images.");
+        return
+      }
+      const bucket='related-images'
+  
+       if(!selectedImage
+         
+       ) return
+        
+        try {
+          setUploadingSelectedImage(true)
+          const publickURL = await uploadThumnail(selectedImage, user.id, bucket )
+          setImages(prev => [...prev, publickURL]);
+      
+          
+        } catch (error) {
+          console.error(error)
+        }finally{
+          setUploadingSelectedImage(false)
+        }
+    }
+
+     // handle delete thumbbnail
+  const  handleDeleteImages=async(filePath)=>{
+    bucket='related-images'
+    try {
+      await deleteImage(filePath, bucket)
+      setImages(images.filter(im=> im.filePath !== filePath))
+      setSelectedImage(null)
+      
+    } catch (error) {
+      console.error(error)
+    }
+}
 
 
 
@@ -64,12 +124,13 @@ export const AddNewProduct = () => {
     }
   }
   const handleUplaodThumbnail=async()=>{
+    const bucket='thumbnail-image'
 
      if(!selectedthumbnail) return
       
       try {
         setUplaodThumnail(true)
-        const publickURL = await uploadThumnail(selectedthumbnail, user.id )
+        const publickURL = await uploadThumnail(selectedthumbnail, bucket )
         setThumbnailURL(publickURL)
     
         
@@ -80,10 +141,11 @@ export const AddNewProduct = () => {
       }
   }
 
+  // handle delete thumbbnail
   const  handleDelete=async(filePath)=>{
-     
+      bucket='thumbnail-image'
       try {
-        await deleteImage(filePath)
+        await deleteImage(filePath, bucket)
         setSelectedthumbnail(null)
         setThumbnailURL('')
         
@@ -91,9 +153,103 @@ export const AddNewProduct = () => {
         console.error(error)
       }
   }
-    console.log('publick url: ', thumbnailURL)
+
+
+
+
+
+
+
+
+  //  handle Save Data to supabase
+   const handleSave=async(publish=null)=>{
+  //  alert('d')
+       setErrors(null)
+      if(!title.trim()){
+        setErrors(prev=> ({...prev, title:'error'}))
+        toast.error('Please enter the Title',{position:'top-center'})
+        return
+      }
+
+      if(price==0){
+        setErrors(prev=> ({...prev, price:'error'}))
+        toast.error('Please enter the Price of the item',{position:'top-center'})
+        return
+      }
+      if(!thumbnailURL){
+        toast.error('Please provide Thumnail picture',{position:'top-center'})
+        return
+      }
+      if(stock==0){
+        setErrors(prev=> ({...prev, stock:'error'}))
+        toast.error('Please enter the how many items in the stock',{position:'top-center'})
+        return
+      }
+      if(!description.trim()){
+        setErrors(prev=> ({...prev, description:'error'}))
+        toast.error('Please enter the Description of item',{position:'top-center'})
+        return
+      }
+
+     
+      if(publish){
+        setPublishLoading(true)
+      }
+      
+      try {
+
+        const  ProductData={
+          title,
+          description,
+          published:publish,
+          price,
+          stock,
+          thumbnailURL,
+          images,
+          selectedCategory,
+          userId:user.id
+      }
+      console.log(ProductData)
+        
+       
+
+        if(isEditMode){
+
+        }else{
+          const data=await createProduct(ProductData)
+           console.log(data)
+           toast.success('Uploaded successfully', {position:"top-right"})
+           cleanUp()
+        }
+        
+      } catch (error) {
+        console.error(error)
+      }finally{
+        setPublishLoading(false)
+      }
+   }
+
+
+   const cleanUp=()=>{
+       setDescription('')
+       setTitle('')
+       setThumbnailURL('')
+       setImages([])
+       setSelectedCategory([])
+       setPrice(0)
+       setStock(0)
+       setSelectedthumbnail(null)
+       setErrors(null)
+       setSelectedImage(null)
+   }
+
+
+    // console.log('Images: ', images)
+
+
+
   return (
-    <SidebarInset className="min-h-[1000px]">
+    <SidebarInset className="min-h-screen">
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
         <div className="flex items-center gap-2 px-4">
           <SidebarTrigger className="-ml-1" />
@@ -117,7 +273,7 @@ export const AddNewProduct = () => {
         <div className="flex justify-between items-center my-4 gap-3 flex-wrap md:flex-nowrap">
           <div className="flex flex-col gap-2 mb-6">
             <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">
-              Add New Product
+              {isEditMode?'Edit the Product' :"Add New Product"}
             </h1>
             <p className="text-sm text-gray-500">
               🛒 Fill out the details below to add a new product to your store.
@@ -126,21 +282,25 @@ export const AddNewProduct = () => {
           </div>
 
           <div className="flex items-center space-x-5 ">
-            <Button className="px-9 cursor-pointer flex items-center gap-2 bg-gray-150 text-gray-700 hover:bg-gray-200 sm:w-28 ">
-              <EyeOff className="w-4 h-4" />
-              Draft
-            </Button>
+          <Button
+              onClick={()=> handleSave(false)}
+              className="px-9 cursor-pointer flex items-center gap-2 bg-gray-150 text-gray-700 hover:bg-gray-200 sm:w-28 ">
+                <EyeOff className="w-4 h-4" />
+                Draft
+              </Button>
 
-            <Button className="px-9 cursor-pointer flex items-center gap-2  sm:w-28">
-            {publishloading ? (
+                <Button 
+                onClick={()=> handleSave(true)}
+                className="px-9 cursor-pointer flex items-center gap-2 sm:w-28">
+                  {publishloading ? (
                     <BeatLoader color="#bbb" loading={true} size={10} />
                   ) : (
                     <>
                       <BookPlus className="w-4 h-4" />
-                      Publish
+                      {isEditMode?'Update':"Publish"}
                     </>
                   )}
-            </Button>
+                </Button>
           </div>
         </div>
 
@@ -152,6 +312,7 @@ export const AddNewProduct = () => {
               Title
             </label>
             <Input
+            className={`${errors?.title && 'border border-orange-600'} `}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               id="title"
@@ -221,14 +382,15 @@ export const AddNewProduct = () => {
               <div className="flex justify-between items-center ">
                 <div className="flex flex-col">
                   <label
-                    htmlFor="thumbnail"
+                    htmlFor="related"
                     className="text-sm font-medium text-gray-600 mb-2"
                   >
                     Related Images
                   </label>
                   <input
+                  onChange={(e)=>handleUplaodImage(e)}
                     type="file"
-                    id="thumbnail"
+                    id="related"
                     className="block w-full text-sm text-gray-500
                file:mr-4 file:py-2 file:px-4
                file:rounded-md file:border-0
@@ -239,17 +401,18 @@ export const AddNewProduct = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  {thumbnailURL && (
+                  {selectedImage && (
                     <Button
+                    onClick={handleUplaodImageSupabase}
                       className={`px-6 py-2 rounded-md font-medium text-white transition-colors duration-200  cursor-pointer
                               ${
-                                uplaodThumnail
+                                uploadingSelectedImage
                                   ? "bg-gray-400 cursor-not-allowed"
                                   : "bg-blue-600 hover:bg-blue-700"
                               }`}
-                      disabled={uplaodThumnail}
+                      disabled={uploadingSelectedImage}
                     >
-                      {uplaodThumnail ? (
+                      {uploadingSelectedImage ? (
                         <BeatLoader color="#ffffff" loading={true} size={10} />
                       ) : (
                         "Upload"
@@ -265,15 +428,17 @@ export const AddNewProduct = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {images.length > 0 &&
                   images.map((img) => (
-                    <div className="relative">
+                    <div className="relative"
+                     key={img.publicUrl}
+                    >
                       <img
-                        src={
-                          "https://images.unsplash.com/photo-1670201202788-522ad9d46a9b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2R1Y3R8ZW58MHx8MHx8fDA%3D"
-                        }
+                        src={img.publicUrl}
                         alt="thumbnail"
                         className="max-h-[160px] w-full object-cover rounded-md"
                       />
-                      <X className="w-6  absolute right-1 top-1 cursor-pointer hover:bg-gray-200/70 z-3 rounded-full bg-gray-200/40" />
+                      <X 
+                      onClick={()=>handleDeleteImages(img.filePath)}
+                      className="w-6  absolute right-1 top-1 cursor-pointer hover:bg-gray-200/70 z-3 rounded-full bg-gray-200/40" />
                     </div>
                   ))}
               </div>
@@ -354,7 +519,7 @@ export const AddNewProduct = () => {
               </label>
               <Input
                 id="price"
-                className="border-gray-300 h-10"
+                className={`${errors?.price ? 'border border-orange-600' :"border-gray-300 h-10"} `}
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 type="number"
@@ -370,7 +535,7 @@ export const AddNewProduct = () => {
               </label>
               <Input
                 id="stock"
-                className="border-gray-300 h-10"
+                className={`${errors?.stock ? 'border border-orange-600' :"border-gray-300 h-10"} `}
                 value={stock}
                 onChange={(e) => setStock(e.target.value)}
                 type="number"
@@ -387,24 +552,28 @@ export const AddNewProduct = () => {
             value={description}
             onChange={(e)=>setDescription(e.target.value)}
               id="description"
-              className="border border-gray-300 rounded-lg p-4 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className={`${errors?.description ? 'border border-orange-600' :"border border-gray-300 "} rounded-lg p-4 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all`}
               rows={5}
               placeholder="Enter a brief description of the product..."
             ></textarea>
 
             <div className="flex items-center space-x-5  py-8 justify-end">
-              <Button className="px-9 cursor-pointer flex items-center gap-2 bg-gray-150 text-gray-700 hover:bg-gray-200 sm:w-28 ">
+              <Button
+              onClick={()=> handleSave(false)}
+              className="px-9 cursor-pointer flex items-center gap-2 bg-gray-150 text-gray-700 hover:bg-gray-200 sm:w-28 ">
                 <EyeOff className="w-4 h-4" />
                 Draft
               </Button>
 
-                <Button className="px-9 cursor-pointer flex items-center gap-2 sm:w-28">
+                <Button 
+                onClick={()=> handleSave(true)}
+                className="px-9 cursor-pointer flex items-center gap-2 sm:w-28">
                   {publishloading ? (
                     <BeatLoader color="#bbb" loading={true} size={10} />
                   ) : (
                     <>
                       <BookPlus className="w-4 h-4" />
-                      Publish
+                      {isEditMode?'Update':"Publish"}
                     </>
                   )}
                 </Button>
