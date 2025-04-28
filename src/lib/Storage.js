@@ -50,3 +50,44 @@ export const deleteImage = async (filePath, bucket) => {
     console.log('Image deleted successfully:', data);
   }
 };
+
+
+
+
+export const uploadImage= async(file, userId, bucket='blogimg')=> {
+  console.log(file);
+  console.log(userId);
+  
+
+
+     try {
+      const fileEx=file.name.split().pop()
+      const fileName=`${uuidv4()}.${fileEx}`
+      const filePath=`${userId}/${fileName}`
+     
+
+      // upload supabase bucket
+      const {data, error}=await supabase.storage
+        .from(bucket)
+        .upload(filePath, file, {
+          cacheControl:'3600',
+          upsert:true,
+          contentType:file.type
+        } )
+
+        if(error) throw error;
+
+        const {data:{publicUrl} }= supabase.storage.from(bucket).getPublicUrl(filePath)
+
+
+        return {publicUrl, filePath}
+        
+
+  } catch (error) {
+      console.error(error)
+  }
+
+
+
+     
+}

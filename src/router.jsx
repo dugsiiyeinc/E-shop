@@ -150,11 +150,19 @@ const Router=createBrowserRouter([
                         element:<EditorBlog/>
                     },
                     {
+                        path:'blogs/:id',
+                        element:<EditorBlog/>
+                    },
+                    {
                         path:'profile',
                         element:<AdminProfile/>
                     },
                     {
                         path:"addProduct",
+                        element:<AddNewProduct/>
+                    },
+                    {
+                        path:"products/:editProduct",
                         element:<AddNewProduct/>
                     }
                 ]

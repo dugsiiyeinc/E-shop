@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -18,11 +18,17 @@ import { categories } from "../categories";
 import toast from "react-hot-toast";
 import { deleteImage, uploadThumnail } from "../lib/Storage";
 import { useAuth } from "../Context/AuthContext";
-import { createProduct } from "../lib/Products";
-
+import { createProduct, updateProduct } from "../lib/Products";
+import { useNavigate, useParams } from "react-router";
+import supabase from "../lib/supabase";
+import { set } from "react-hook-form";
+  // let isEditMode=false
 export const AddNewProduct = () => {
-const isEditMode=false
+  const params=useParams()
+  const navigate=useNavigate()
+  // console.log(params)
 
+  const [isEditMode, setIsEditMode] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -41,8 +47,6 @@ const isEditMode=false
 
   const {user}=useAuth()
   let bucket=''
-  // console.log(categories);
-  // console.log(selectedCategory);
 
   const addCategory = (category) => {
     setSelectedCategory((prev) =>
@@ -209,12 +213,15 @@ const isEditMode=false
           selectedCategory,
           userId:user.id
       }
-      console.log(ProductData)
+      // console.log(ProductData)
         
        
 
         if(isEditMode){
-
+         await updateProduct(params.editProduct, ProductData)
+         toast.success('Product Updated successfully', {position:"top-right"})
+         cleanUp()
+         navigate('/admin/products')
         }else{
           const data=await createProduct(ProductData)
            console.log(data)
@@ -246,7 +253,36 @@ const isEditMode=false
 
     // console.log('Images: ', images)
 
+  
 
+    useEffect(()=>{
+     if(params?.editProduct){
+      setIsEditMode(true)
+
+      const getProductById=async()=>{
+          try {
+            const {data, error}=await supabase.from('products')
+            .select('*')
+            .eq('id', Number(params.editProduct))
+            .single()
+
+            // console.log(data)
+
+            setTitle(data.title)
+            setPrice(data.price)
+            setStock(data.stock)
+            setDescription(data.description)
+            setImages(data.images)
+            setThumbnailURL(data.thumnail_image[0])
+            setSelectedCategory(data.category)
+          } catch (error) {
+            console.error(error)
+          }
+       }
+      getProductById()
+     }
+     
+    },[])
 
   return (
     <SidebarInset className="min-h-screen">

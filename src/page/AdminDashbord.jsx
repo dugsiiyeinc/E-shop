@@ -7,7 +7,7 @@ import { Outlet } from 'react-router'
 
 export default function AdminDashbord() {
   return (
-   <div className="w-full ">
+   <div className="w-full relative ">
      <SidebarProvider>
       <AppSidebar/>
       {/* <SidebarInset className='bg-gray-950'>
