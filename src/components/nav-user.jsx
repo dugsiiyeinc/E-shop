@@ -29,11 +29,16 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { useAuth } from "../Context/AuthContext"
+import { Link } from "react-router"
 
 export function NavUser({
   user
 }) {
   const { isMobile } = useSidebar()
+
+  const {user:adminData, profile, logOutFun}=useAuth()
+  // console.log(profile)
 
   return (
     <SidebarMenu>
@@ -44,12 +49,12 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarImage src={profile?.avatar_url} alt={profile?.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-medium">{profile?.name}</span>
+                <span className="truncate text-xs">{adminData?.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -59,42 +64,44 @@ export function NavUser({
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}>
-            <DropdownMenuLabel className="p-0 font-normal">
+            {/* <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarImage src={profile?.avatar_url} alt={profile?.name} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-medium">{profile?.name}</span>
+                  <span className="truncate text-xs">{adminData?.email}</span>
                 </div>
               </div>
-            </DropdownMenuLabel>
+            </DropdownMenuLabel> */}
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+             <Link to={'profile'} >
+             <DropdownMenuItem className="hover:bg-gray-200 rounded-md">
                 <BadgeCheck />
-                Account
+                Account Profile
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
+             </Link>
+              <DropdownMenuItem className="hover:bg-gray-200 rounded-md">
                 <Bell />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={
+              async()=>{
+                try {
+                  await logOutFun()
+                } catch (error) {
+                  console.error(error)
+                }
+              }
+            } className="hover:bg-red-200 rounded-md hover:text-red-500">
               <LogOut />
               Log out
             </DropdownMenuItem>

@@ -42,7 +42,7 @@ const Router=createBrowserRouter([
                 element:<AboutPage/>
             },
             {
-                path:'/contect',
+                path:'/contact',
                 element:<ContectPage/>
             },
             {
@@ -114,7 +114,14 @@ const Router=createBrowserRouter([
                 ],
               },
               
-           
+              {
+                path: "checkOut",
+                element:(
+                    <AuthenticatedRoutes>
+                        <UserOrdes /> 
+                    </AuthenticatedRoutes>
+                    )
+              },
            
             {
                 path:"/admin",

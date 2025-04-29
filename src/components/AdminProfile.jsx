@@ -59,51 +59,51 @@ const handleAvatarChange=(e)=>{
 
 
 // upload the profileData
-// const handleSubmit=async ()=>{
-//   setLoading(true)
-//     try {
+const handleSubmit=async ()=>{
+  setLoading(true)
+    try {
         
-//         let updates={name:userName}
-//         // check file selected avatar
-//         if(avatar){
-//             const fileEx=avatar.name.split().pop();
-//             const fileName=`${user.id}-${uuidv4()}`
-//             const filePath=`avatars/${fileName}.${fileEx}`
+        let updates={name:userName}
+        // check file selected avatar
+        if(avatar){
+            const fileEx=avatar.name.split().pop();
+            const fileName=`${user.id}-${uuidv4()}`
+            const filePath=`avatars/${fileName}.${fileEx}`
           
-//             // upload supabase
-//             const {error:storageImageError}=await supabase.storage.from('avatars').upload(filePath, avatar);
+            // upload supabase
+            const {error:storageImageError}=await supabase.storage.from('avatars').upload(filePath, avatar);
 
-//             if(storageImageError) throw storageImageError
+            if(storageImageError) throw storageImageError
 
-//             // get bublick avatar url
-//             const {data}=supabase.storage.from('avatars').getPublicUrl(filePath) 
-//             updates={
-//                 ...updates,
-//                 avatar_url:data.publicUrl
-//             }
+            // get bublick avatar url
+            const {data}=supabase.storage.from('avatars').getPublicUrl(filePath) 
+            updates={
+                ...updates,
+                avatar_url:data.publicUrl
+            }
 
-//             setAvatar_url(data.publicUrl)
-//         }
+            setAvatar_url(data.publicUrl)
+        }
 
-//         const {data, error}=await supabase
-//         .from('users')
-//         .update(updates)
-//         .eq('id', user.id)
-//         .select()
-//         .single()
+        const {data, error}=await supabase
+        .from('users')
+        .update(updates)
+        .eq('id', user.id)
+        .select()
+        .single()
 
 
-//     if(error) throw error
-//     console.log('profile updated', data)
+    if(error) throw error
+    console.log('profile updated', data)
 
     
 
-//     } catch (error) {
-//         console.error(error)
-//     }finally{
-//         setLoading(false)
-//     }
-// }
+    } catch (error) {
+        console.error(error)
+    }finally{
+        setLoading(false)
+    }
+}
 
 
 
@@ -164,7 +164,7 @@ const handleAvatarChange=(e)=>{
        className="max-w-md my-2 border border-gray-300 py-2 px-3 rounded-md bg-gray-100 text-gray-700 cu"
       />
 
-      <Button className={'mt-8 py-5 cursor-pointer '}>{!loading?'Save changes':  <BeatLoader color="#bbb" loading={true} size={10} />}</Button>
+      <Button onClick={handleSubmit} className={'mt-8 py-5 cursor-pointer '}>{!loading?'Save changes':  <BeatLoader color="#bbb" loading={true} size={10} />}</Button>
       </div>
     </div>
      </SidebarInset>

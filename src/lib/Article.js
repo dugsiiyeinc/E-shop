@@ -138,3 +138,27 @@ export async function getArticleById(articleId) {
       return null;  
     }
   }
+
+
+
+//   get all articles for blog page 
+export const getBlogsPaginated = async (page = 1, limit = 6) => {
+    // alert('')
+    const from = (page - 1) * limit;
+    const to = from + limit - 1;
+   let pub= true
+    const { data, error, count } = await supabase
+      .from('blogs')
+      .select('*', { count: 'exact' })
+      .range(from, to)
+      .eq('publish', pub)
+      .order('created_at', { ascending: false });
+  
+    if (error) throw error;
+    console.log(data)
+    return {
+      blogs: data,
+      total: count,
+      totalPages: Math.ceil(count / limit),
+    };
+  };

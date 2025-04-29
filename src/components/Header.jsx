@@ -81,14 +81,14 @@ export const Header = () => {
             </NavLink>
 
             <NavLink
-              to={"/contect"}
+              to={"/contact"}
               className={({ isActive }) =>
                 isActive
                   ? "text-gray-700 border-b-2  border-gray-800   py-1 hover:text-gray-800 font-medium transition duration-300 ease-in-out"
                   : "text-gray-800 hover:text-gray-900 font-medium   py-1"
               }
             >
-              Contect
+              Contact
             </NavLink>
 
             <NavLink
@@ -143,7 +143,7 @@ export const Header = () => {
                         </DropdownMenuItem>
                       )}
                       <DropdownMenuItem className="cursor-pointer hover:bg-gray-200">
-                        <Truck /> My Orders
+                        <Link to={'/checkOut'} className="flex  items-center"><Truck className="mr-2"/> Check Out</Link>
                       </DropdownMenuItem>
                      <Link to={'/auth'}>
                      <DropdownMenuItem onClick={()=> {logOutFun()}} className="cursor-pointer bg-red-50 hover:bg-red-100 text-red-500">
@@ -266,14 +266,14 @@ export const Header = () => {
             </NavLink>
 
             <NavLink
-              to={"/contect"}
+              to={"/contact"}
               className={({ isActive }) =>
                 isActive
                   ? "text-orange-700 text-lg font-medium transition duration-300 ease-in-out"
                   : "text-gray-800 hover:text-gray-900 font-medium   py-1"
               }
             >
-              Contect
+              Contact
             </NavLink>
 
             <NavLink
