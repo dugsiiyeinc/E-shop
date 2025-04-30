@@ -90,7 +90,7 @@ export const BlogsPage = () => {
               <img
                 src={blog.featured_image[0].publicUrl}
                 alt={blog.title}
-                className="w-full h-48 object-cover"
+                className="w-full h-48 object-cover  hover:scale-110 duration-230"
               />
               <div className="p-5">
                 {/* Title */}

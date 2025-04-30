@@ -77,6 +77,18 @@ export const getAllProducts=async({limit=100,offset=0})=>{
     return data
 }
 
+// get all products for search
+export const getAllProductsForSearch=async()=>{
+  let {data, error}= await supabase
+  .from('products')
+  .select('*')
+
+
+  if(error) throw error
+   
+  return data
+}
+
 
 
 // delete product

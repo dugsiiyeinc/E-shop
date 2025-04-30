@@ -36,6 +36,7 @@ export const ProductspageAdmin = () => {
     try {
     const data= await getAllProducts({limit:10})
     setProducts(data)
+    console.log(data)
    
     } catch (error) {
       console.error(error)

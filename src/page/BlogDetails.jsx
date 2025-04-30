@@ -111,7 +111,7 @@ export const BlogDetails = () => {
                 article.tags.map(tag => (
                   <Link
                   key={tag}
-                    className=" ml-2 inline-flex text-orange-600 bg-orange-100 px-3 rounded text-sm hover:text-orange-800 cursor-pointer"
+                    className=" ml-2 inline-flex text-red-600 bg-red-100 px-3 rounded text-sm hover:text-red-800 cursor-pointer"
                   >
                     {tag}
                   </Link>

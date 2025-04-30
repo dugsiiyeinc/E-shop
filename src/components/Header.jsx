@@ -24,7 +24,7 @@ import { useAuth } from "../Context/AuthContext";
 
 export const Header = () => {
 
-  const {user, isLogged, profile, logOutFun}=useAuth()
+  const {user, isLogged, profile, logOutFun, cartLength}=useAuth()
   // console.log(user)
   // console.log(profile)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -112,7 +112,7 @@ export const Header = () => {
                   <Link to={"/cart"} className="relative">
                     <IoCartOutline className="text-xl text-gray-500" />
                     <div className="absolute -top-1 -right-2 w-4 h-4 rounded-full text-xs text-center bg-rose-600 text-white">
-                      2
+                     {cartLength}
                     </div>
                   </Link>
 

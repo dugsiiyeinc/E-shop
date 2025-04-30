@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router'
 import { Users, Building2, SunMedium, Award } from 'lucide-react';
+import bannerImage from "@/assets/image (1).jpg";
+import img2 from "@/assets/image.jpg";
 
 export const AboutPage = () => {
   return (
@@ -23,7 +25,7 @@ export const AboutPage = () => {
         </p>
       </div>
       <img
-        src="/solar-team.jpg"
+        src={img2}
         alt="Our Team"
         className="w-full lg:w-[500px] rounded-2xl shadow-xl"
       />
@@ -71,7 +73,7 @@ export const AboutPage = () => {
         ].map(({ name, feedback, logo, icon }) => (
           <div key={name} className="bg-white p-6 rounded-xl shadow hover:shadow-md transition space-y-4">
             <div className="flex items-center gap-4">
-              <img src={logo} alt={name} className="w-12 h-12 object-contain" />
+              <img src={bannerImage} alt={name} className="w-12 h-12 object-contain rounded-lg" />
               <div className="text-gray-800 font-semibold">{name}</div>
             </div>
             <div className="text-gray-600 italic text-sm flex items-start gap-2">
