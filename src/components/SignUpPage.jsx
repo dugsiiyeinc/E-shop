@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "./ui/button";
 import { BeatLoader } from "react-spinners";
 import { useForm } from "react-hook-form";
-import { signUp } from "../lib/Auth";
+import { signUpp } from "../lib/Auth";
 import { CheckCircle } from 'lucide-react';
 import toast from "react-hot-toast";
 
@@ -23,7 +23,7 @@ export default function SignUpPage() {
   const onSubmit = async({email, password, username}) => {
     setIsLoading(true)
      try {
-       await signUp(email, password, username)
+       await signUpp(email, password, username)
        toast.success('Account created!')
        setSuccesss(true)
      } catch (error) {

@@ -1,17 +1,21 @@
 import supabase from "./supabase";
 
 // signup
-export async function signUp(email, password, username='') {
+export async function signUpp(email, password, username='') {
       
       let {data,error}=await supabase.auth.signUp({
         email:email,
         password:password
       })
+      if(error) throw error
+      createCart(data?.user?.id)
+      console.log(data)
 
-
-
-      return data
+      // return data
 }
+
+
+
 
 
 // signin
@@ -27,7 +31,7 @@ export async function  signIn(email, password){
 
   // check ifuser profile exists
   if(data?.user){
-
+  
     try {
       
       const profile =await getUserProfile(data.user.id)
@@ -39,6 +43,17 @@ export async function  signIn(email, password){
 }
 
 
+// create cart autmatic
+export const createCart=async(user_id)=>{
+  const {data, err}=await supabase
+  .from('carts')
+  .insert([{user_id}])
+
+  console.log(data)
+  if(err){
+    console.error(err)
+  }
+}
 
 // get user Profile
 export const getUserProfile=async(userId)=>{

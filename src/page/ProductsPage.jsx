@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import supabase from '../lib/supabase';
 import { Link } from 'react-router';
+import { IoCartOutline } from 'react-icons/io5';
 
 export const ProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -34,7 +35,7 @@ export const ProductsPage = () => {
         if (error) throw error;
         
         setProducts(data);
-        console.log(data)
+        // console.log(data)
         setFilteredProducts(data);
       } catch (err) {
         setError(err.message);
@@ -93,6 +94,10 @@ export const ProductsPage = () => {
     setPriceRange([0, 100000]);
     setSearchQuery('');
   };
+
+
+
+  
 
   
   if(loading){
@@ -219,9 +224,9 @@ export const ProductsPage = () => {
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-lg font-bold text-gray-900">${product.price}</span>
-                        <button className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-700 transition-colors">
-                          Add to Cart
-                        </button>
+                        <Link to={`/products/${product.id}`} className=" cursor-pointer px-3 py-1 border-1 hover:bg-red-100 border-red-500 flex items-center gap-1 text-sm rounded hover:border-red-700 transition-colors">
+                         View to cart   <IoCartOutline className="text-xl text-red-500" />
+                        </Link>
                       </div>
                     </div>
                   </div>

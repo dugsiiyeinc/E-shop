@@ -6,10 +6,10 @@ import { RouterProvider } from 'react-router'
 import Router from './router.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <RouterProvider router={Router}>
       <App />
     </RouterProvider>
     
-  </StrictMode>,
+  //  </StrictMode>, 
 )

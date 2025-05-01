@@ -75,7 +75,11 @@ export const BlogsPage = () => {
       </div>
 
       {loading ? (
-        <div className="text-center text-gray-500">Loading blogs...</div>
+
+              <div className="min-h-[200px] flex items-center justify-center">
+                  <div className=" animate-spin rounded-full h-12 w-12 border-2 border-b-orange-600  border-t-white border-r-white border-l-white"></div>
+              </div>
+       
       ) : filteredBlogs.length === 0 ? (
         <div className="text-center text-red-500">No blogs found.</div>
       ) : (

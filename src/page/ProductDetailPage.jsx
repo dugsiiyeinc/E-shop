@@ -1,17 +1,24 @@
 import { useState, useEffect } from 'react';
 import supabase from '../lib/supabase';
-import { Link, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
 import { Plane } from 'lucide-react';
+import { useAuth } from '../Context/AuthContext';
+import { addItemToCart, checkingIfCartAdded } from '../lib/Cart';
+import toast from 'react-hot-toast';
 
 export const ProductDetailPage = () => {
  
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [car_product, setCar_product] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [ItC, setItC] = useState(0);
   const[currentIm, setCurrentImg]=useState('')
+  const {user, isLogged, setCartLength}=useAuth()
+  const navigate=useNavigate()
 
   useEffect(() => {
     if (!id) return;
@@ -29,9 +36,10 @@ export const ProductDetailPage = () => {
         //  console.log(productData)
         if (productError) throw productError;
         if (!productData) throw new Error('Product not found');
-
+        checking(productData?.id)
         setProduct(productData)
         setCurrentImg(productData.thumnail_image[0].publicUrl)
+        
        
 
          if(productData.category.length>0){
@@ -74,11 +82,36 @@ export const ProductDetailPage = () => {
     fetchProduct();
   }, [id]);
 
-  const handleAddToCart = () => {
-    // Implement your cart logic here
-    console.log(`Added ${quantity} of ${product.title} to cart`);
+  const handleAddToCart = async() => {
+      if(!isLogged){
+       navigate('/auth')
+       return
+      }
+     if(car_product){ 
+      toast('All ready in cart')
+      return
+    }
+      try {
+        setCartLength(prev=> prev+1)
+        await addItemToCart(user?.id, quantity, product?.id, product?.thumnail_image[0]?.publicUrl, product?.title, product?.price)
+        checking(product?.id)
+      } catch (error) {
+        console.error(error)
+      }
   };
 
+
+  // checking if this product all ready in cart_item table
+  const checking=async(product_id)=>{
+     try {
+     const data= await checkingIfCartAdded(product_id, user.id)
+     setCar_product(data)
+    //  console.log(data)
+     } catch (error) {
+      console.log(error)
+     }
+  }
+// console.log(quantity)
   if (loading) return <div className="flex justify-center py-20">Loading product...</div>;
   if (error) return <div className="text-red-500 text-center py-20">Error: {error}</div>;
   if (!product) return <div className="text-center py-20">Product not found</div>;
@@ -111,7 +144,7 @@ export const ProductDetailPage = () => {
           {/* Product Images */}
           <div className="w-full lg:w-1/2">
             <div className="bg-white p-4 rounded-lg shadow-sm mb-4">
-              {product.thumnail_image?.[0]?.publicUrl ? (
+              {product.thumnail_image[0]?.publicUrl ? (
                 <img
                   src={currentIm || product.thumnail_image[0].publicUrl}
                   alt={product.title}
@@ -186,12 +219,21 @@ export const ProductDetailPage = () => {
 
             <button
               onClick={handleAddToCart}
-              disabled={product.stock <= 0}
-              className={`w-full py-3 px-4 rounded-lg font-medium mb-6 cursor-pointer ${product.stock > 0 
-                ? 'bg-red-600 text-white hover:bg-red-700' 
+              className={`w-full py-3 px-4 rounded-lg font-medium mb-6  ${!car_product
+                ? 'bg-red-600 text-white hover:bg-red-700 cursor-pointer' 
                 : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
             >
-              {product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
+              <>
+              {
+                car_product ?(
+                  'All ready added to cart'
+                ):<>
+                 {product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
+                </>
+
+
+              }
+              </>
             </button>
 
             <div className="bg-gray-50 p-4 rounded mb-6 border border-gray-300 mt-12">

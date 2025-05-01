@@ -5,6 +5,7 @@ import { FaSolarPanel, FaBatteryFull, FaLightbulb, FaPlug, FaTools, FaBolt } fro
 import { Eye, Heart, Truck, ShieldCheck, Clock, PackageCheck } from 'lucide-react';
 import { FaHeart } from "react-icons/fa";
 import bunner_solar from '../assets/image (4).jpg'
+import { IoCartOutline } from 'react-icons/io5';
 
 export const Home = () => {
 
@@ -103,7 +104,7 @@ export const Home = () => {
 }
   if (error) return <div className="text-red-500 text-center py-8">Error: {error}</div>;
 
-console.log(blogs)
+// console.log(blogs)
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -171,12 +172,9 @@ console.log(blogs)
             <div className="flex items-center gap-1 text-yellow-400 mb-4">
               ★★★★ 
             </div>
-            <button 
-              className="w-full py-2 bg-red-600 text-white rounded-sm hover:bg-red-700 cursor-pointer"
-              // onClick={() => handleAddToCart(product)}
-            >
-              Add to Cart
-            </button>
+             <Link to={`/products/${product.id}`} className=" cursor-pointer px-3 py-1 border-1 hover:bg-red-100 border-red-500 flex items-center gap-1 text-sm rounded justify-center hover:border-red-700 transition-colors">
+                                     View to cart   <IoCartOutline className="text-xl text-red-500" />
+              </Link>
           </div>
         ))}
       </div>
