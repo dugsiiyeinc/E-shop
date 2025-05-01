@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import supabase from '../lib/supabase';
 import { deleteItemFromCart, getingCartsByUsedId } from '../lib/Cart';
 import { useAuth } from '../Context/AuthContext';
+import toast from 'react-hot-toast';
 
 export default function CartsPage() {
   
@@ -10,8 +11,9 @@ export default function CartsPage() {
   const [couponCode, setCouponCode] = useState('');
   const [cuantity, setCuantity] = useState(0);
   const [loading, setLoading] = useState(true);
-  const {user, setCartLength}=useAuth()
-
+  const [Processing, setProcessing] = useState(false);
+  const {user, setCartLength, setItemsToOrderProcess}=useAuth()
+  const navigate =useNavigate()
   useEffect(() => {
   
       // console.log(user)
@@ -19,7 +21,7 @@ export default function CartsPage() {
      
         try {
           const data =await getingCartsByUsedId(user.id)
-          console.log(data)
+          // console.log(data)
           setCartItems(data);
           
         } catch (error) {
@@ -53,6 +55,21 @@ fetchCartItems();
     } catch (error) {
       console.error(error)
     }
+ }
+ function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+ const ProcessToOder=async()=>{
+  if(cartItems.length ==0){
+    toast.error('Cart isempty !')
+    return
+  }
+  setProcessing(true)
+  setItemsToOrderProcess(cartItems)
+  await wait(2000);
+  setProcessing(false)
+  navigate('/checkOut')
  }
 
   if(loading){
@@ -156,8 +173,10 @@ if(cartItems.length ==0){
                 <span>${(calculateTotal() - calculateTotal() /20).toFixed()}</span>
               </div>
             </div>
-            <button className="w-full py-3 bg-red-600 text-white rounded hover:bg-red-700">
-              Process to checkout
+            <button onClick={ProcessToOder} className={`${Processing && 'bg-red-700'} cursor-pointer w-full py-3 flex items-center justify-center bg-red-600 text-white rounded hover:bg-red-700 `}>
+              {Processing? 
+                <div className=" animate-spin rounded-full h-6 w-6 border-2 border-b-orange-600  border-t-white border-r-white border-l-white"></div>
+              :'Process to checkout'}
             </button>
           </div>
         </div>

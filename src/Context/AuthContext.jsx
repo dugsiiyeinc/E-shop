@@ -10,6 +10,7 @@ export const AuthProvider=({children})=>{
     const [profile, setProfile]=useState(null)
     const [loading, setLoading]=useState(true)
     const [cartLength, setCartLength]=useState(0)
+    const [itemsToOrderProcess, setItemsToOrderProcess]=useState([])
 
 
     useEffect(()=>{
@@ -54,7 +55,9 @@ export const AuthProvider=({children})=>{
         isLogged:!!user,
         logOutFun,
         cartLength,
-        setCartLength
+        setCartLength,
+        itemsToOrderProcess, 
+        setItemsToOrderProcess
     }
 
 

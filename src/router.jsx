@@ -15,7 +15,6 @@ import { UnAuthtenticatedRout } from "./components/UnAuthtenticatedRout";
 import { AuthenticatedRoutes } from "./components/AuthenticatedRoutes";
 import { AuthenticatedAminRoutes } from "./components/AuthenticatedAdminRoute";
 import { UserProfile } from "./page/UserProfile";
-import { UserOrdes } from "./page/UserOrdes";
 import { UserprofileInfo } from "./components/UserprofileInfo";
 import { Right } from "@/components/Right";
 import { ProductspageAdmin } from "./components/ProductspageAdmin";
@@ -24,6 +23,8 @@ import { Users } from "./components/Users";
 import { AdminProfile } from "./components/AdminProfile";
 import { AdminBlogPage } from "./components/AdminBlogPage";
 import { AddNewProduct } from "./components/AddNewProduct";
+import { CheckOut } from "./page/CheckO";
+import UserOrdes from "./page/UserOrdes";
 
 
 
@@ -118,7 +119,7 @@ const Router=createBrowserRouter([
                 path: "checkOut",
                 element:(
                     <AuthenticatedRoutes>
-                        <UserOrdes /> 
+                        <CheckOut /> 
                     </AuthenticatedRoutes>
                     )
               },

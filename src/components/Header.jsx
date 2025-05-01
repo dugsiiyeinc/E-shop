@@ -143,7 +143,7 @@ export const Header = () => {
                         </DropdownMenuItem>
                       )}
                       <DropdownMenuItem className="cursor-pointer hover:bg-gray-200">
-                        <Link to={'/userProfile/orders'} className="flex  items-center"><Truck className="mr-2"/> Check Out</Link>
+                        <Link to={'/userProfile/orders'} className="flex  items-center"><Truck className="mr-2"/> My Orders</Link>
                       </DropdownMenuItem>
                      <Link to={'/auth'}>
                      <DropdownMenuItem onClick={()=> {logOutFun()}} className="cursor-pointer bg-red-50 hover:bg-red-100 text-red-500">
