@@ -27,7 +27,6 @@ export const ProductDetailPage = () => {
       try {
         setLoading(true);
         
-        // fetch data
         const { data: productData, error: productError } = await supabase
           .from('products')
           .select('*')
@@ -226,7 +225,7 @@ export const ProductDetailPage = () => {
               <>
               {
                 car_product ?(
-                  'All ready added to cart'
+                  'Added to the cart'
                 ):<>
                  {product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
                 </>

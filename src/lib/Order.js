@@ -28,3 +28,20 @@ if (error) {
 }
 
 }
+
+
+
+
+// getAll Orders
+export const getAllArticles=async()=>{
+     
+    const {data, error}=await supabase
+    .from('orders')
+    .select("*")
+
+
+
+    if(error) throw error
+
+     return data
+}

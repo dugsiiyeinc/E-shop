@@ -286,7 +286,7 @@ console.log(articles)
                             <td className="px-6 py-4 whitespace-nowrap ">
                               <div className="flex items-center space-x-3 sm:space-x-5 text-sm">
                                 <Link
-                                  // to={`/article/${article.id}`}
+                                  to={`/blogs/${article.id}`}
                                   className="text-orange-600 hover:text-orange-700 rounded-full hover:bg-orange-50 cursor-pointer"
                                 >
                                   <FiEye />

@@ -39,7 +39,7 @@ export const CheckOut = () => {
 
       setItemsToOrderProcess([])
       reset()
-      setCartLength(pre=> pre - 0)
+      setCartLength(0)
       setSuccess(true)
     } catch (error) {
       console.error(error)

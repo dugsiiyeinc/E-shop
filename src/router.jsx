@@ -25,6 +25,7 @@ import { AdminBlogPage } from "./components/AdminBlogPage";
 import { AddNewProduct } from "./components/AddNewProduct";
 import { CheckOut } from "./page/CheckO";
 import UserOrdes from "./page/UserOrdes";
+import { OrderDetails } from "./page/OrderDetails";
 
 
 
@@ -145,6 +146,11 @@ const Router=createBrowserRouter([
                         path:'orders',
                         element:<OrdersPageAdmin/>
                     },
+                    {
+                     path:"orders/:id",
+                     element:<OrderDetails/>
+                    },
+                   
                     {
                         path:"users",
                         element:<Users/>
