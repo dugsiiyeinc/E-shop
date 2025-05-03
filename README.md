@@ -81,3 +81,18 @@ src/
 └── styles/
 
 
+
+
+🤝 Contributing
+Contributions are welcome! Please open an issue or submit a PR if you'd like to help.
+
+📜 License
+This project is open-source and available under the MIT License.
+
+🙌 Special Thanks
+Thanks to the open-source community and tools like React, Supabase, Tailwind, and Shadcn for making this possible.
+
+✉️ Contact
+Have questions or want to connect?
+
+📧 Email: abdiqafaarabdulahi@gmail.com
