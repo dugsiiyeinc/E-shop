@@ -1,20 +1,83 @@
-# 🛒 E-shope
+# ⚡ Modern Solar & Electronics E-Commerce Platform
 
-**E-shope** is a modern e-commerce web application built with **React** and **Supabase**. It allows users to browse and purchase electronics with features like cart management, user authentication, and admin control.
+Welcome to my **open-source** E-Commerce platform built with **React** and **Supabase**!  
+This website showcases a modern design and intuitive interface tailored for companies selling **solar irrigation systems, solar panels, batteries, routers, AVRs, pumps**, and other **electrical installations**. Whether you're a customer, technician, or admin—this platform is built to serve you efficiently.
 
-## 🚀 Features
+> 💡 Clean Code • ⚙️ Scalable • 💻 Open-Source • 🌞 Built for Solar & Electronics Retailers
 
-- 🛍️ Browse products by category and filter
-- 🛒 Add to cart and manage checkout
-- 🔐 User authentication with Supabase Auth
-- 📊 Admin dashboard with product, order, and user management
-- ⭐ Product rating system
-- 📦 Real-time order tracking with status updates
+---
 
-## 🛠️ Tech Stack
+## 🚀 Live Demo
 
-- Frontend: **React**, **Tailwind CSS**, **React Router**
-- Backend: **Supabase** (PostgreSQL, Auth, Storage, and Realtime)
+🔗 [https://your-site-demo-url.com](https://your-site-demo-url.com)
 
-## 📁 Folder Structure
+> 👤 Demo Admin Email: `admin@demo.com`  
+> 🔐 Demo Password: `123456`
+
+---
+
+## 🖼️ Screenshots
+
+<!-- Add screenshots or GIFs here to showcase your website -->
+<!-- Example: ![Homepage](./src/assets/) -->
+<!-- Example: ![Admin Dashboard](./screenshots/dashboard.png) -->
+
+---
+
+## 📦 Tech Stack & Dependencies
+
+- ⚛️ React
+- 🧱 Supabase (Auth + Database + Storage)
+- 🛒 Zustand / Context API for state management
+- 🎨 TailwindCSS for UI styling
+- 📦 Shadcn/UI Components (Accordion, Tooltip, Cards)
+- 📈 Chart.js or Recharts (for data visualization in Admin)
+- 🔒 Role-based access: Admin, Teacher, Student, Customer
+
+---
+
+## 🔧 Features
+
+- ✅ Fully responsive design
+- ✅ Admin dashboard with charts and product controls
+- ✅ Customer cart and order management
+- ✅ Automatic cart creation on signup
+- ✅ Blog system with featured images
+- ✅ Tooltip-enhanced UI
+- ✅ Protected routes with Auth Guard
+- ✅ Real-time updates using Supabase's onAuthStateChange
+- ✅ Custom hooks, reusable components, and clean structure
+
+---
+
+## 🛠️ Getting Started
+
+Clone the repository:
+
+```bash
+git clone https://github.com/dugsiiyeinc/E-shop.git
+cd solar-ecommerce
+
+
+*Install dependencies:
+ npm install 
+
+*Create a .env file and add your Supabase credentials:
+VITE_SUPABASE_URL=your-supabase-url
+VITE_SUPABASE_ANON_KEY=your-anon-key
+
+
+*Run the development server:
+npm run dev
+
+
+*📂 Folder Structure
+src/
+├── components/
+├── pages/
+├── lib/
+├── context/
+├── hooks/
+└── styles/
+
 
