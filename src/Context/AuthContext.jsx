@@ -1,81 +1,70 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getUserProfile, onAuthChange, sginOut } from "../lib/Auth";
+import { getProfile, getUserProfile, onAuthChange, sginOut } from "../lib/Auth";
 import { getingCartsByUsedId } from "../lib/Cart";
 
-const AuthContext=createContext(null)
+const AuthContext = createContext(null);
 
-export const AuthProvider=({children})=>{
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [cartLength, setCartLength] = useState(0);
+  const [itemsToOrderProcess, setItemsToOrderProcess] = useState([]);
 
-    const [user, setUser]=useState(null)
-    const [profile, setProfile]=useState(null)
-    const [loading, setLoading]=useState(true)
-    const [cartLength, setCartLength]=useState(0)
-    const [itemsToOrderProcess, setItemsToOrderProcess]=useState([])
+  useEffect(() => {
+    const cleanUp = onAuthChange(async (User) => {
+      setUser(User);
 
+      if (User) {
+        try {
+          const userProfile = await getProfile(User.id);
+          console.log(userProfile)
+          setProfile(userProfile);
 
-    useEffect(()=>{
-    
-      const cleanUp=onAuthChange(async(User)=>{
-        setUser(User)
-        if(User){
-            try {
-                const userProfile=await getUserProfile(User.id)
-                setProfile(userProfile)
-                const carat_leng=await getingCartsByUsedId(User.id)
-               
-                const len= carat_leng.length
-                //  console.log(len)
-                setCartLength(len)
-            } catch (error) {
-                console.error(error)
-            }
-        }else{
-            setProfile(null)
+          const userCarts = await getingCartsByUsedId(User.id);
+          setCartLength(userCarts.length);
+        } catch (error) {
+          console.error("Error fetching user profile or cart:", error);
         }
-      })
- setLoading(false)
+      } else {
+        setProfile(null);
+        setCartLength(0);
+      }
 
-      return ()=>cleanUp
-    },[])
+      setLoading(false);
+    });
 
+    return cleanUp;
+  }, []);
 
-
-    const logOutFun= async()=>{
-       try {
-        await sginOut()
-       } catch (error) {
-        console.error(error)
-       }
+  const logOutFun = async () => {
+    try {
+      await sginOut();
+    } catch (error) {
+      console.error("Logout failed:", error);
     }
+  };
 
-    const value={
-        profile,
-        user,
-        loading,
-        isLogged:!!user,
-        logOutFun,
-        cartLength,
-        setCartLength,
-        itemsToOrderProcess, 
-        setItemsToOrderProcess
-    }
+  const value = {
+    setProfile,
+    profile,
+    user,
+    loading,
+    isLogged: !!profile,
+    logOutFun,
+    cartLength,
+    setCartLength,
+    itemsToOrderProcess,
+    setItemsToOrderProcess,
+  };
 
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
 
-    return(
-        <AuthContext.Provider value={value}>
-            {children}
-        </AuthContext.Provider>
-    )
-}
-
-
-export function useAuth(){
-    const context=useContext(AuthContext)
-    //  console.log(context)
-    
-    if(context === null){
-        throw new Error('context must be provided user data!')
-    }
-
-    return context
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (context === null) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 }

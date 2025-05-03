@@ -13,7 +13,7 @@ export const UserprofileInfo = () => {
  const  [avatar_url, setAvatar_url]=useState('')
  const  [avatar,setAvatar]=useState(null)
  const  [loading,setLoading]=useState(false)
- const {profile, user}=useAuth()
+ const {profile, setProfile, user}=useAuth()
 //  console.log(profile)
 //  console.log(user)
 
@@ -82,7 +82,7 @@ const handleSubmit=async ()=>{
     if(error) throw error
     console.log('profile updated', data)
 
-    
+    setProfile(data)
 
     } catch (error) {
         console.error(error)

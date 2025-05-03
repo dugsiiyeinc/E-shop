@@ -110,11 +110,13 @@ if(cartItems.length ==0){
           
             <div key={item.id} className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center py-4 border-b">
               <div className="flex items-center col-span-2 md:col-span-1">
+                <Link to={`/products/${item.product_id}`}>
                 <img 
                   src={item.product_thumbnail} 
                   alt={item.name} 
                   className="w-16 h-16 object-cover rounded mr-4"
                 />
+                </Link>
                 <span className="text-gray-800 font-medium">{item.product_tittle}</span>
               </div>
               <div className="text-gray-600">${Number(item.product_price)}</div>

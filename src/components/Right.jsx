@@ -184,7 +184,7 @@ const getAllData = async () => {
                 <TableCell className="font-medium">{order.name}</TableCell>
                 <TableCell>{order.status}</TableCell>
                 <TableCell>{dayjs(order.created_at).format("MMM D, YYYY")}</TableCell>
-                <TableCell className="text-right">${order.total_price}</TableCell>
+                <TableCell className="text-right">${(order.total_price- order.total_price /19.5).toFixed()}</TableCell>
               </TableRow>
             ))
           )}

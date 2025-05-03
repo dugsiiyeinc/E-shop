@@ -1,15 +1,17 @@
 import supabase from "./supabase";
+let userName=''
 
 // signup
 export async function signUpp(email, password, username='') {
+  userName=username
       
       let {data,error}=await supabase.auth.signUp({
-        email:email,
-        password:password
+        email,
+        password
       })
       if(error) throw error
       createCart(data?.user?.id)
-      console.log(data)
+      // console.log(data)
 
       // return data
 }
@@ -35,7 +37,8 @@ export async function  signIn(email, password){
     try {
       
       const profile =await getUserProfile(data.user.id)
-      console.log("profile ", profile)
+      // console.log("profile ", profile)
+      return profile
     } catch (error) {
       console.error(error)
     }
@@ -76,7 +79,7 @@ export const getUserProfile=async(userId)=>{
      .from('users')
      .insert({
        id: userId,
-       name: defaultName,
+       name:userName || defaultName,
        avatar_url: null
      })
      .select()
@@ -87,7 +90,7 @@ export const getUserProfile=async(userId)=>{
      console.error(error)
      return
    }else{
-     console.log('profile created', profileData)
+    //  console.log('profile created', profileData)
    }
 
    return profileData
@@ -101,15 +104,42 @@ export const getUserProfile=async(userId)=>{
 return data
 }
 
+export const getProfile = async (id) => {
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", id)
+      .single(); 
+
+    if (error && error.code === "PGRST116") {
+      return null;
+    }
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  } catch (err) {
+    console.error("Error fetching profile:", err.message);
+    return null;
+  }
+};
+
+
 
 
 // knowing if user is loged in or logout
-export async function onAuthChange(calback){
-  const {data}=supabase.auth.onAuthStateChange((event, session)=>{
-    //  console.log(session)
-      calback(session?.user || null, event)
-  })
-  return ()=> data.subscription.unsubscribe()
+export function onAuthChange(callback) {
+  const { data: subscription } = supabase.auth.onAuthStateChange((event, session) => {
+    const user = session?.user || null;
+    callback(user, event);
+  });
+    
+  if(subscription){
+     return () => subscription.unsubscribe(); 
+  }
 }
 
 

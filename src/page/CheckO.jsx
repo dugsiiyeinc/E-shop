@@ -11,7 +11,7 @@ export const CheckOut = () => {
  const {itemsToOrderProcess, setItemsToOrderProcess,user , setCartLength}=useAuth()
    const [Processing, setProcessing] = useState(false);
    const[sucess, setSuccess]=useState(false)
-
+    // console.log(itemsToOrderProcess)
   let total =0
 
   if(!user){
@@ -36,7 +36,7 @@ export const CheckOut = () => {
       const {dat, er}=await supabase.from('cart_items')
       .delete()
       .eq('user_id', user.id)
-
+       await incrementStock()
       setItemsToOrderProcess([])
       reset()
       setCartLength(0)
@@ -56,8 +56,46 @@ export const CheckOut = () => {
    total =calculateTotal()
 
 
+ const incrementStock = async () => {
+    try {
+      for (const item of itemsToOrderProcess) {
+        const { product_id, quant } = item;
+  
+        const { data: product, error: fetchError } = await supabase
+          .from('products')
+          .select('stock')
+          .eq('id', product_id)
+          .single();
+  
+        if (fetchError) {
+          console.error('Fetch error:', fetchError);
+          return;
+        }
+  
+        const newStock = (product?.stock ) - Number(quant)
+        // console.log('newStock:', newStock)
+        if (newStock < 0) {
+          console.warn(`Not enough stock for product ID: ${product_id}`);
+          return;
+        }
+  
+        const { error: updateError } = await supabase
+          .from('products')
+          .update({ stock: newStock })
+          .eq('id', product_id);
+  
+        if (updateError) {
+          console.error('Update error:', updateError);
+        }
+      }
+  
+      console.log("Stock updated successfully.");
+    } catch (error) {
+      console.error('incrementStock failed:', error);
+    }
+  };
 
-
+  
    if(sucess){
     return (
       <motion.div
@@ -79,7 +117,7 @@ export const CheckOut = () => {
       </motion.div>
     );
    }
-  
+  //  console.log(itemsToOrderProcess)
   return (
     <div className="px-4 sm:px-8 py-10 max-w-7xl mx-auto">
 

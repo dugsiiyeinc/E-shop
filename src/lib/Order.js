@@ -38,6 +38,7 @@ export const getAllArticles=async()=>{
     const {data, error}=await supabase
     .from('orders')
     .select("*")
+    .order('created_at',{ascending:true})
 
 
 

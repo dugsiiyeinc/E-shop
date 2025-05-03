@@ -4,11 +4,14 @@ import { Button } from "./ui/button";
 import { BeatLoader } from "react-spinners";
 import { useForm } from "react-hook-form";
 import { signIn } from "../lib/Auth";
-import { Navigate, useNavigate } from "react-router";
+import {  useNavigate } from "react-router";
+import { useAuth } from "../Context/AuthContext";
 
 export default function SigingPage() {
   const [success, setSuccess] = useState(false);
   const [loading, setIsLoading] = useState(false);
+
+  const {setProfile}=useAuth()
 
   const navigate=useNavigate()
 
@@ -23,7 +26,8 @@ export default function SigingPage() {
      setIsLoading(true)
     try {
      
-      await signIn(email, password)
+      const data =await signIn(email, password)
+      setProfile(data)
        setSuccess(true)
     } catch (error) {
       setSuccess(false)

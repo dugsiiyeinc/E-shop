@@ -184,11 +184,11 @@ export const AddNewProduct = () => {
         toast.error('Please provide Thumnail picture',{position:'top-center'})
         return
       }
-      if(stock==0){
-        setErrors(prev=> ({...prev, stock:'error'}))
-        toast.error('Please enter the how many items in the stock',{position:'top-center'})
-        return
-      }
+      // if(stock==0){
+      //   setErrors(prev=> ({...prev, stock:'error'}))
+      //   toast.error('Please enter the how many items in the stock',{position:'top-center'})
+      //   return
+      // }
       if(!description.trim()){
         setErrors(prev=> ({...prev, description:'error'}))
         toast.error('Please enter the Description of item',{position:'top-center'})

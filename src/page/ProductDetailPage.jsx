@@ -82,10 +82,17 @@ export const ProductDetailPage = () => {
   }, [id]);
 
   const handleAddToCart = async() => {
+     
       if(!isLogged){
        navigate('/auth')
        return
       }
+  
+       if(product.stock <1){
+        toast('This product is out of stock !')
+        return
+       }
+
      if(car_product){ 
       toast('All ready in cart')
       return
@@ -201,14 +208,16 @@ export const ProductDetailPage = () => {
               <span className="font-medium text-gray-700 mr-4">Quantity:</span>
               <div className="flex items-center border border-gray-300 rounded">
                 <button 
-                  onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
+                  onClick={() =>{
+                     setQuantity(prev => Math.max(1, prev - 1))
+                    }}
                   className="px-3 py-1 text-lg"
                 >
                   -
                 </button>
                 <span className="px-4 py-1 border-x border-gray-300">{quantity}</span>
                 <button 
-                  onClick={() => setQuantity(prev => prev + 1)}
+                  onClick={() => setQuantity(prev => prev < product.stock? prev + 1 : prev=product.stock)}
                   className="px-3 py-1 text-lg"
                 >
                   +
@@ -218,7 +227,7 @@ export const ProductDetailPage = () => {
 
             <button
               onClick={handleAddToCart}
-              className={`w-full py-3 px-4 rounded-lg font-medium mb-6  ${!car_product
+              className={`w-full py-3 px-4 rounded-lg font-medium mb-6  ${!car_product && product.stock > 0
                 ? 'bg-red-600 text-white hover:bg-red-700 cursor-pointer' 
                 : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
             >
@@ -248,7 +257,7 @@ export const ProductDetailPage = () => {
         </div>
 
         {/* Related Products */}
-        {relatedProducts.length > 0 && (
+        {relatedProducts.length < 1 && (
           <div className="mt-12">
             <div className="flex  space-x-2 mb-4">
               <div className="w-3 h-8 rounded bg-red-500"></div>

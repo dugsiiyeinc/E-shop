@@ -31,6 +31,59 @@ export const AboutPage = () => {
       />
     </section>
 
+    <section className='mb-20'>
+    <div className="bg-gradient-to-br from-white to-gray-100 py-16 px-6 md:px-16 lg:px-24 rounded-3xl shadow-2xl">
+  <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-10 text-center leading-tight">
+    Who We Are & What We Do
+  </h2>
+
+  <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-10 text-justify">
+    At <span className="font-semibold text-black">SolTech Energy Solutions</span>, we’re more than just a solar company — we’re a passionate team of engineers, designers, and energy specialists dedicated to changing lives through smart, clean, and sustainable energy technologies. From advanced <span className="text-black font-medium">solar irrigation systems</span> that transform agriculture, to <span className="text-black font-medium">off-grid solar setups</span> that light up homes in remote villages, our mission is rooted in impact and innovation.
+  </p>
+
+  <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-10 text-justify">
+    We offer a wide range of services and products: <span className="text-black font-medium">solar panels</span>, <span className="text-black font-medium">charge controllers</span>, <span className="text-black font-medium">inverters</span>, <span className="text-black font-medium">solar batteries</span>, and <span className="text-black font-medium">custom installation solutions</span> for homes, farms, schools, and industries. Whether you're looking to reduce your energy costs, switch to clean energy, or ensure uninterrupted power supply, we provide turnkey solutions tailored to your goals.
+  </p>
+
+  <h3 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-6 mt-12">
+    Our Experience & Expertise
+  </h3>
+
+  <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-10 text-justify">
+    With over <span className="font-semibold text-black">7 years of hands-on experience</span>, our team has completed more than <span className="text-black font-medium">120+ solar projects</span> across various sectors. From powering irrigation systems in rural communities to installing advanced solar solutions for companies and NGOs, we understand the unique energy challenges in different environments. Our experience allows us to design intelligent systems that are not only technically sound, but also financially efficient and scalable for the future.
+  </p>
+
+  <h3 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-6 mt-12">
+    Our Vision for a Brighter Future
+  </h3>
+
+  <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-10 text-justify">
+    At the core of our work is a powerful vision: <span className="text-black font-medium">a future where clean, renewable energy is accessible to everyone — everywhere</span>. We believe that solar power is more than a utility — it's a right. Our commitment is to ensure that no school, hospital, farm, or home is left in the dark due to lack of infrastructure. We are actively working with partners, communities, and innovators to bring sustainable energy to even the most hard-to-reach regions.
+  </p>
+
+  <h3 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-6 mt-12">
+    Quality That Speaks for Itself
+  </h3>
+
+  <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-10 text-justify">
+    Every product we offer is selected with precision and tested for durability. We work only with <span className="font-semibold text-black">internationally certified suppliers</span>, and we carry out rigorous quality checks before any item reaches our customers. Our <span className="text-black font-medium">installation process</span> follows global safety and efficiency standards, and we proudly offer <span className="text-black font-medium">after-sales support</span> and warranty coverage. When you choose us, you’re investing in a solution that lasts, performs, and pays for itself over time.
+  </p>
+
+  <div className="bg-yellow-100 border-l-4 border-yellow-400 p-6 rounded-xl shadow-md mt-12">
+    <p className="text-xl md:text-2xl font-semibold text-gray-800 text-center">
+      🌞 Powered by passion. Driven by innovation. Trusted by communities.
+    </p>
+  </div>
+
+  <div className="mt-16 text-center">
+    <p className="text-lg md:text-xl text-gray-600">
+      Ready to join the solar revolution? <span className="font-bold text-gray-800">Let’s power your future — together.</span>
+    </p>
+  </div>
+</div>
+
+    </section>
+
     {/* Company Stats */}
     <section className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-20 text-center">
       {[

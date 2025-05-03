@@ -4,6 +4,8 @@ import { useAuth } from "../Context/AuthContext"
 export const UnAuthtenticatedRout = ({children, redarectTo='/'}) => {
      
     const {loading, isLogged}=useAuth()
+    console.log((isLogged));
+    
 
     if(loading){
         return (

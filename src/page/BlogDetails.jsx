@@ -3,6 +3,7 @@ import { FiCalendar } from "react-icons/fi";
 import { useAuth } from "../Context/AuthContext";
 import { getArticleById } from "../lib/Article";
 import { useEffect, useState } from "react";
+import supabase from "../lib/supabase";
 
 
 export const BlogDetails = () => {
@@ -10,7 +11,7 @@ export const BlogDetails = () => {
   const { user, profile } = useAuth();
   const [article, setArticle] = useState([]);
   const [loading, setLoading] = useState(false);
-  console.log(article);
+  const [owner, setOwner]=useState(null)
   
 
   useEffect(() => {
@@ -19,6 +20,16 @@ export const BlogDetails = () => {
       try {
         setLoading(true);
         const article = await getArticleById(id);
+        // console.log(article);
+
+        const {data:adminData}=await supabase
+        .from('users')
+        .select('*')
+        .single()
+        .eq('id', article.user_id)
+        //  console.log(adminData)
+
+        setOwner(adminData)
 
         setArticle(article);
       } catch (error) {
@@ -124,10 +135,10 @@ export const BlogDetails = () => {
 
             {/* author */}
             <div className="flex my-4items-center gap-3 border-b border-gray-100 pb-5">
-              <img src={profile?.avatar_url || 'https://placehold.co/150'} alt="avatar"  className="h-12 w-12 rounded-full object-cover"/>
+              <img src={owner?.avatar_url || 'https://placehold.co/150'} alt="avatar"  className="h-12 w-12 rounded-full object-cover"/>
               <div className="flex flex-col gap-0 text-sm">
                 <Link >
-                 <strong className="text-gray-700 capitalize  font-medium cursor-pointer  hover:underline">{profile?.name}</strong>
+                 <strong className="text-gray-700 capitalize  font-medium cursor-pointer  hover:underline">{owner?.name}</strong>
                 </Link>
                 <span className="text-gray-600 flex items-center text-xs">
                   <FiCalendar className="mr-2"/>
