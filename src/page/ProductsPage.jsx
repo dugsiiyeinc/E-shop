@@ -212,13 +212,13 @@ export const ProductsPage = () => {
                     key={product.id}
                     className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow relative"
                   >
-                    <div className="aspect-w-16 aspect-h-9 bg-gray-100">
+                    <div className="aspect-w-16 aspect-h-9 bg-gray-100 h-[270px] p-2">
                       {product.thumnail_image?.[0]?.publicUrl ? (
                         <Link to={`/products/${product.id}`}>
                           <img
                             src={product.thumnail_image[0].publicUrl}
                             alt={product.title}
-                            className="w-full h-48 object-cover  hover:scale-110 duration-230"
+                            className="w-full h-full object-cover  hover:scale-110 duration-230"
                           />
                         </Link>
                       ) : (
