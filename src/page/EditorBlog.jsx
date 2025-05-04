@@ -14,7 +14,7 @@ import toast from "react-hot-toast";
 import { FiInfo, FiSave, FiTag, FiX } from "react-icons/fi";
 import { QuillEditor } from "../components/Quill";
 import { Navigate, useNavigate, useParams } from "react-router";
-import { deleteImage, uploadImage } from "../lib/storage";
+import { deleteImage, uploadImage } from "../lib/Storage";
 import { createErticle, getArticleById, updateRticle } from "../lib/Article";
 import { useAuth } from "../Context/AuthContext";
 
