@@ -9,9 +9,9 @@ This website showcases a modern design and intuitive interface tailored for comp
 
 ## 🚀 Live Demo
 
-🔗 [https://your-site-demo-url.com](https://your-site-demo-url.com)
+🔗 [e-shop-3fjy.vercel.app/](e-shop-3fjy.vercel.app/)
 
-> 👤 Demo Admin Email: `admin@demo.com`  
+> 👤 Demo Admin Email: `demo@gmail.com`  
 > 🔐 Demo Password: `123456`
 
 ---
@@ -19,8 +19,8 @@ This website showcases a modern design and intuitive interface tailored for comp
 ## 🖼️ Screenshots
 
 <!-- Add screenshots or GIFs here to showcase your website -->
-<!-- Example: ![Homepage](./src/assets/) -->
-<!-- Example: ![Admin Dashboard](./screenshots/dashboard.png) -->
+Example: ![Homepage](./src/assets/Screenshot%202025-05-04%20164115.png)
+Example: ![Admin Dashboard](./src/assets/Screenshot%202025-05-04%20164046.png)
 
 ---
 
