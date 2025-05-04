@@ -19,8 +19,8 @@ This website showcases a modern design and intuitive interface tailored for comp
 ## 🖼️ Screenshots
 
 <!-- Add screenshots or GIFs here to showcase your website -->
-Example: ![Homepage](./src/assets/Screenshot%202025-05-04%20164115.png)
-Example: ![Admin Dashboard](./src/assets/Screenshot%202025-05-04%20164046.png)
+Home: ![Homepage](./src/assets/Screenshot%202025-05-04%20164115.png)
+Admin-Daxhboard: ![Admin Dashboard](./src/assets/Screenshot%202025-05-04%20164046.png)
 
 ---
 
