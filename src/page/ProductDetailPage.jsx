@@ -257,7 +257,7 @@ export const ProductDetailPage = () => {
         </div>
 
         {/* Related Products */}
-        {relatedProducts.length < 1 && (
+        {relatedProducts.length >0 && (
           <div className="mt-12">
             <div className="flex  space-x-2 mb-4">
               <div className="w-3 h-8 rounded bg-red-500"></div>
