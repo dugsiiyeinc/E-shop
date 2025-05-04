@@ -168,13 +168,13 @@ export const Home = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 my-10 px-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 my-10 px-4 sm:px-2">
         {products.map((product) => (
           <div
             key={product.id}
             className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow relative"
           >
-            <div className="bg-gray-100 h-48 rounded-lg mb-3 flex items-center justify-center">
+            <div className="bg-gray-100 h-[250px] rounded-lg mb-3 flex items-center justify-center">
               {product.thumnail_image ? (
                 <>
                   <Link
