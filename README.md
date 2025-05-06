@@ -32,7 +32,8 @@ Admin-Daxhboard: ![Admin Dashboard](./src/assets/Screenshot%202025-05-04%2016404
 - 🎨 TailwindCSS for UI styling
 - 📦 Shadcn/UI Components (Accordion, Tooltip, Cards)
 - 📈 Chart.js or Recharts (for data visualization in Admin)
-- 🔒 Role-based access: Admin, used
+- 🔒 Role-based access: Admin, user
+- 
 
 ---
 
